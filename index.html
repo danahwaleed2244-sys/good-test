@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>ورشة الاختبار الجيد – اكتشفي الخلل</title>
+<title>ورشة بناء أسئلة الاختبار</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=El+Messiri:wght@500;600;700&family=IBM+Plex+Sans+Arabic:wght@400;600&family=Noto+Naskh+Arabic:wght@400;700&family=Aref+Ruqaa:wght@700&family=Aref+Ruqaa+Ink:wght@400;700&display=swap">
 <style>
 :root{
@@ -312,18 +312,18 @@ function render(){({home,quiz,thanks,cert,login,dash})[S.view]();}
 function home(){
   const preDone=!!S.ids.pre&&isDone(S.picks.pre), postDone=!!S.ids.post&&isDone(S.picks.post);
   app.innerHTML=`<div class="wrap"><div class="hero">
-    <span class="pill">${penIcon('#8C6B33')} ورشة الاختبار الجيد · ${esc(CFG.school)}</span>
+    <span class="pill">${penIcon('#8C6B33')} ورشة بناء أسئلة الاختبار · ${esc(CFG.school)}</span>
     <div class="illus">${paperIcon()}</div>
     <h1>هل اختبارك بصحة جيدة؟</h1>
     <div class="orn">✦</div>
-    <p class="sub">ورقة اختبار فيها اثنا عشر موضع خلل. ستحلّينها مرتين: قبل الورشة وبعدها، لنقيس أثر الورشة.</p>
+    <p class="sub">ورقة اختبار فيها اثنا عشر سؤالًا بُنيت بأخطاء. ستشخّصينها مرتين: مرة في بداية الورشة، ومرة في نهايتها.</p>
     <label for="nm" style="font-weight:600">اسمك الثلاثي</label>
     <input id="nm" class="field" autocomplete="name" value="${esc(S.name)}" placeholder="مثال: نورة عبدالله السالم">
     <p class="note">اكتبي اسمك بنفس الطريقة في المرتين.</p>
     <p class="err" id="err"></p>
     <div class="btns">
-      <button class="btn" id="goPre" type="button" ${preDone?'disabled':''}>${preDone?'تم إرسال الاختبار القبلي':(S.ids.pre?'أكملي الاختبار القبلي':'الاختبار القبلي (قبل الورشة)')}</button>
-      <button class="btn gold" id="goPost" type="button">${postDone?'عرض شهادتي':(S.ids.post?'أكملي الاختبار البعدي':'الاختبار البعدي (بعد الورشة)')}</button>
+      <button class="btn" id="goPre" type="button" ${preDone?'disabled':''}>${preDone?'تم إرسال التشخيص الأول':(S.ids.pre?'أكملي التشخيص الأول':'التشخيص الأول (بداية الورشة)')}</button>
+      <button class="btn gold" id="goPost" type="button">${postDone?'عرض شهادتي':(S.ids.post?'أكملي التشخيص الثاني':'التشخيص الثاني (نهاية الورشة)')}</button>
     </div>
     ${(S.ids.pre||S.ids.post)?'<button class="link" id="again" type="button" style="align-self:center">البدء من جديد باسم آخر</button>':''}
   </div>
@@ -348,9 +348,9 @@ function start(ph){
 
 function quiz(){
   const pre=S.phase==='pre',p=P(),answered=p.filter(x=>x!==null).length;
-  app.innerHTML=`<header class="top"><div class="top-in"><h2>${penIcon()}${esc(S.name)}</h2><span class="phase ${pre?'':'post'}">${pre?'القبلي':'البعدي'}</span><span class="muted">${ar(answered)} من ${ar(N)}</span></div><div class="bar"><i style="width:${answered/N*100}%"></i></div></header>
-  <div class="wrap"><p class="muted" style="margin:8px 4px 0">${pre?'اختاري لكل موضع الخاصية التي ترينها. لن يظهر التصحيح الآن، بل بعد الورشة.':'اضغطي على كل دائرة واختاري الخاصية المفقودة، وسيظهر التصحيح مباشرة.'}</p>
-  <div class="desk">${pencilArt()}<article class="paper" aria-label="ورقة الاختبار">${clipArt()}<div class="phead"><span>ورقة الفحص · ${pre?'قبل الورشة':'بعد الورشة'}</span><span>اثنا عشر موضعًا</span></div>${SPOTS.map((s,i)=>{
+  app.innerHTML=`<header class="top"><div class="top-in"><h2>${penIcon()}${esc(S.name)}</h2><span class="phase ${pre?'':'post'}">${pre?'التشخيص الأول':'التشخيص الثاني'}</span><span class="muted">${ar(answered)} من ${ar(N)}</span></div><div class="bar"><i style="width:${answered/N*100}%"></i></div></header>
+  <div class="wrap"><p class="muted" style="margin:8px 4px 0">${pre?'اختاري لكل سؤال الخاصية التي ترينها. لن يظهر التصحيح الآن، بل في التشخيص الثاني.':'اضغطي على كل دائرة واختاري الخاصية المفقودة، وسيظهر التصحيح مباشرة.'}</p>
+  <div class="desk">${pencilArt()}<article class="paper" aria-label="ورقة الاختبار">${clipArt()}<div class="phead"><span>ورقة الفحص · ${pre?'التشخيص الأول':'التشخيص الثاني'}</span><span>اثنا عشر موضعًا</span></div>${SPOTS.map((s,i)=>{
     const v=p[i];let cls='',tag='';
     if(v!==null){if(pre){cls='picked';tag=`<span class="tag pick">${OPTIONS[v]}</span>`;}else{const ok=v===s.answer;cls=ok?'ok':'bad';tag=`<span class="tag ${ok?'ok':'bad'}">${OPTIONS[s.answer]}</span>`;}}
     return `<div class="block"><button type="button" class="mark ${cls}" data-i="${i}" aria-label="افحصي ${s.name}">${ar(i+1)}</button><div class="txt">${s.html}${tag}</div></div>`;
@@ -392,7 +392,7 @@ function thanks(){
     <div class="illus">${paperIcon()}</div>
     <h1>شكرًا لكِ يا ${esc(S.name.split(' ')[0])}</h1>
     <div class="orn">✦</div>
-    <p class="sub">وصلت إجاباتك القبلية. نتيجتك وتصحيح كل موضع يظهران بعد الورشة، عندما تحلّين الاختبار البعدي.</p>
+    <p class="sub">وصل تشخيصك الأول. نتيجتك وتصحيح كل سؤال يظهران في نهاية الورشة، عندما تشخّصين الورقة مرة ثانية.</p>
     <button class="btn ghost" id="hm" type="button">العودة إلى البداية</button>
   </div></div>`;
   $('hm').onclick=()=>{S.view='home';render();};
@@ -410,8 +410,8 @@ function certHTML(rec,pre){
     <div class="kind">${star?'شهادة تميّز':'شهادة مشاركة'}</div>
     <div class="to">تُمنح للأستاذة</div>
     <div class="name">${esc(rec.name)}</div>
-    <div class="for">${star?'لتميّزها':'لمشاركتها الفاعلة'} في تشخيص جودة الاختبار في ورشة «الاختبار الجيد»</div>
-    <div class="score">${pre!==null&&pre!==undefined?`قبل الورشة ${ar(pre)} من ${ar(N)} ← بعد الورشة ${ar(sc)} من ${ar(N)}`:`شخّصت ${ar(sc)} من ${ar(N)} مواضع بدقة`}</div>
+    <div class="for">${star?'لتميّزها':'لمشاركتها الفاعلة'} في تشخيص جودة أسئلة الاختبار في ورشة «بناء أسئلة الاختبار»</div>
+    <div class="score">${pre!==null&&pre!==undefined?`التشخيص الأول ${ar(pre)} من ${ar(N)} ← التشخيص الثاني ${ar(sc)} من ${ar(N)}`:`شخّصت ${ar(sc)} من ${ar(N)} مواضع بدقة`}</div>
     <div class="foot">${sign(CFG.presenter,CFG.presenterSign||SIGN_EMBED,'منفذة الورشة')}<div><b>${today()}</b><span>التاريخ</span></div>${sign(CFG.principal,'','مديرة المدرسة')}</div>
   </div></div>`;
 }
@@ -477,37 +477,37 @@ function dash(){
   app.innerHTML=`<div class="wrap wide">
   <div class="dhead"><h1>${penIcon()}لوحة منفذة الورشة</h1><span class="live"><i></i>تتحدث تلقائيًا</span><button class="btn ghost" id="out" type="button">خروج</button></div>
   <div class="stats">
-    <div class="stat">${statIcon('now')}<div><b>${ar(preD.length)}</b>أنهت القبلي</div></div>
-    <div class="stat">${statIcon('done')}<div><b>${ar(postD.length)}</b>أنهت البعدي</div></div>
-    <div class="stat">${statIcon('acc')}<div><b>${aPre===null?'—':pct(aPre)}</b>الدقة قبل الورشة</div></div>
-    <div class="stat">${statIcon('acc')}<div><b>${aPost===null?'—':pct(aPost)}</b>الدقة بعد الورشة</div></div>
+    <div class="stat">${statIcon('now')}<div><b>${ar(preD.length)}</b>أنهت التشخيص الأول</div></div>
+    <div class="stat">${statIcon('done')}<div><b>${ar(postD.length)}</b>أنهت التشخيص الثاني</div></div>
+    <div class="stat">${statIcon('acc')}<div><b>${aPre===null?'—':pct(aPre)}</b>دقة التشخيص الأول</div></div>
+    <div class="stat">${statIcon('acc')}<div><b>${aPost===null?'—':pct(aPost)}</b>دقة التشخيص الثاني</div></div>
   </div>
   ${nowA?`<p class="muted" style="margin:-8px 4px 18px">${ar(nowA)} تجيب الآن…</p>`:''}
 
   <div class="card impact">
     <h3>قياس الأثر</h3>
-    ${aPre!==null&&aPost!==null?`<div class="big"><span>من</span><b>${pct(aPre)}</b><span>إلى</span><b class="gold">${pct(aPost)}</b><span class="gain">${signed(Math.round(aPost)-Math.round(aPre))} نقطة</span></div>`:'<p class="muted">يظهر هنا الفرق بين القبلي والبعدي عند وصول الإجابات.</p>'}
-    <div class="keys"><span><i class="kpre"></i>قبل الورشة</span><span><i class="kpost"></i>بعد الورشة</span></div>
+    ${aPre!==null&&aPost!==null?`<div class="big"><span>من</span><b>${pct(aPre)}</b><span>إلى</span><b class="gold">${pct(aPost)}</b><span class="gain">${signed(Math.round(aPost)-Math.round(aPre))} نقطة</span></div>`:'<p class="muted">يظهر هنا الفرق بين التشخيصين عند وصول الإجابات.</p>'}
+    <div class="keys"><span><i class="kpre"></i>التشخيص الأول</span><span><i class="kpost"></i>التشخيص الثاني</span></div>
     <div class="cmp">${OPTIONS.map((o,c)=>`<div class="crow"><span class="cn">${o}</span><div class="b2"><div class="t pre"><i style="width:${rPre[c]??0}%"></i></div><div class="t post"><i style="width:${rPost[c]??0}%"></i></div></div><span class="cv">${rPre[c]===null?'—':pct(rPre[c])}<br><b>${rPost[c]===null?'—':pct(rPost[c])}</b></span></div>`).join('')}</div>
-    ${best&&best.g>0?`<div class="best">${sealArt()}<div><small>الأكثر تقدّمًا</small><b>${esc(best.name)}</b><span>${signed(best.g)} مواضع بعد الورشة</span></div></div>`:''}
+    ${best&&best.g>0?`<div class="best">${sealArt()}<div><small>الأكثر تقدّمًا</small><b>${esc(best.name)}</b><span>${signed(best.g)} مواضع في التشخيص الثاني</span></div></div>`:''}
   </div>
 
   <div class="grid2">
-    <div class="card"><h3>منصة التتويج (البعدي)</h3>${ranked.length?`<div class="podium">${pod}</div>`:'<p class="empty">بانتظار أول معلمة تنهي الاختبار البعدي…</p>'}
+    <div class="card"><h3>منصة التتويج (التشخيص الثاني)</h3>${ranked.length?`<div class="podium">${pod}</div>`:'<p class="empty">بانتظار أول معلمة تنهي التشخيص الثاني…</p>'}
       <h3 style="margin-top:18px">كل المشاركات</h3>
       <div class="tlist">${rows.length?rows.map(p=>{
         const g=(p.preDone&&p.postDone)?p.postSc-p.preSc:null, star=p.postDone&&p.postSc>=CFG.starAt;
-        const st=p.postDone?(star?'تميّز':'أنهت'):(p.post?'تجيب البعدي':(p.preDone?'أنهت القبلي':'تجيب القبلي'));
+        const st=p.postDone?(star?'تميّز':'أنهت'):(p.post?'في التشخيص الثاني':(p.preDone?'أنهت الأول':'في التشخيص الأول'));
         return `<div class="rw"><button type="button" class="trow ${star?'star':''}" data-k="${esc(p.key)}" ${p.postDone?'':'disabled'}>
           <span class="nm">${esc(p.name)}</span>
           <span class="pp">${p.preDone?ar(p.preSc):'—'} ← ${p.postDone?ar(p.postSc):'—'}</span>
           ${g!==null?`<span class="chg ${g>0?'up':''}">${signed(g)}</span>`:''}
           <span class="st">${st}</span></button>
           ${S.armDel===p.key?`<button type="button" class="del armed" data-k="${esc(p.key)}">تأكيد الحذف</button>`:`<button type="button" class="del" data-k="${esc(p.key)}" aria-label="حذف نتيجة ${esc(p.name)}"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 7h14M10 7V4h4v3M7 7l1 13h8l1-13" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>`}</div>`;}).join(''):'<p class="empty">لا مشاركات بعد. أرسلي الرابط للمعلمات.</p>'}</div>
-      <p class="muted" style="font-size:.9rem;margin:10px 0 0">الأرقام: القبلي ← البعدي. اضغطي على اسم أنهت البعدي لعرض شهادتها.</p>
+      <p class="muted" style="font-size:.9rem;margin:10px 0 0">الأرقام: التشخيص الأول ← الثاني. اضغطي على اسم أنهت التشخيص الثاني لعرض شهادتها.</p>
     </div>
     <div class="card"><h3>ماذا اختارت المعلمات في كل موضع؟</h3>
-      <div class="tabs"><button type="button" data-ph="pre" class="${ph==='pre'?'on':''}">القبلي</button><button type="button" data-ph="post" class="${ph==='post'?'on':''}">البعدي</button></div>
+      <div class="tabs"><button type="button" data-ph="pre" class="${ph==='pre'?'on':''}">التشخيص الأول</button><button type="button" data-ph="post" class="${ph==='post'?'on':''}">التشخيص الثاني</button></div>
       <div class="legend">${OPTIONS.map((o,k)=>`<span><i style="background:${COLORS[k]}"></i>${o}</span>`).join('')}</div>
       ${SPOTS.map((s,i)=>{const c=counts[i],t=c.reduce((a,b)=>a+b,0);
         return `<div class="spot"><div class="sh"><span>${ar(i+1)} · ${s.name}</span><span class="muted">الصحيح: ${OPTIONS[s.answer]}${t?' · '+pct(c[s.answer]/t*100):''}</span></div>
