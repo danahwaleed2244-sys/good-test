@@ -41,7 +41,7 @@ h1,h2,h3{font-family:'El Messiri',Tahoma,sans-serif;margin:0;font-weight:700}
 .orn{display:flex;align-items:center;justify-content:center;gap:10px;color:var(--gold)}
 .orn::before,.orn::after{content:"";height:1px;width:70px;background:linear-gradient(to left,transparent,var(--gold))}
 .orn::after{background:linear-gradient(to right,transparent,var(--gold))}
-.pill{display:inline-flex;align-self:center;gap:8px;align-items:center;font-size:.9rem;font-weight:600;color:var(--gold-deep);background:var(--gold-soft);padding:4px 14px;border-radius:999px}
+.pill{display:inline-flex;align-self:center;gap:8px;align-items:center;justify-content:center;text-align:center;font-size:.9rem;font-weight:600;color:var(--gold-deep);background:var(--gold-soft);padding:4px 14px;border-radius:999px}
 .top{position:sticky;top:0;z-index:5;background:rgba(251,250,246,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding-top:env(safe-area-inset-top,0px)}
 .top-in{max-width:780px;margin:0 auto;padding:12px 16px;display:flex;align-items:center;gap:12px}
 .top-in h2{font-size:1.15rem;flex:1;display:flex;align-items:center;gap:10px}
@@ -141,6 +141,8 @@ h1,h2,h3{font-family:'El Messiri',Tahoma,sans-serif;margin:0;font-weight:700}
 @media print{body{background:#fff}body *{visibility:hidden}.cert,.cert *{visibility:visible}.cert{position:absolute;inset:0;box-shadow:none;margin:0}.cert-actions{display:none}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 .btns{display:flex;flex-direction:column;gap:10px}
+.by{margin:-6px 0 0;text-align:center;color:var(--soft);font-size:1rem}
+.by b{font-family:'El Messiri',Tahoma,sans-serif;color:var(--gold-deep);font-size:1.15rem}
 .note{font-size:.9rem;color:var(--soft);margin:-6px 0 0}
 .phase{font-size:.8rem;font-weight:600;padding:2px 12px;border-radius:999px;background:var(--pen-soft);color:var(--pen-deep)}
 .phase.post{background:var(--gold-soft);color:var(--gold-deep)}
@@ -315,6 +317,7 @@ function home(){
     <span class="pill">${penIcon('#8C6B33')} ورشة بناء أسئلة الاختبار · ${esc(CFG.school)}</span>
     <div class="illus">${paperIcon()}</div>
     <h1>هل اختبارك بصحة جيدة؟</h1>
+    <p class="by">منفذة الورشة: <b>${esc(CFG.presenter)}</b></p>
     <div class="orn">✦</div>
     <p class="sub">ورقة اختبار فيها اثنا عشر سؤالًا بُنيت بأخطاء. ستشخّصينها مرتين: مرة في بداية الورشة، ومرة في نهايتها.</p>
     <label for="nm" style="font-weight:600">اسمك الثلاثي</label>
