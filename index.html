@@ -203,7 +203,7 @@ const CFG = {
   principal: "اسماء العتيبي",              /* مديرة المدرسة */
   school: "متوسطة السيل الصغير",
   presenterSign: "",                      /* توقيعك مضمّن في آخر الملف؛ اتركيها فارغة */
-    starAt: 9                               /* عدد الإجابات الصحيحة لشهادة التميّز */
+    starAt: 5                               /* عدد الإجابات الصحيحة لشهادة التميّز */
 };
 const TRIP = "ورشة الاختبار الجيد";
 /* ============================================ */
@@ -216,13 +216,7 @@ const SPOTS = [
   {name:'السؤال الثاني', html:'<p><b>س٢:</b> أيٌّ مما يلي ليس من الأجزاء غير الضرورية للنبات؟</p><p class="opts">(أ) الجذر (ب) الساق (ج) الورقة (د) جميع ما سبق</p>', answer:0, why:'النفي المزدوج يقيس مهارة القراءة لا معرفة العلوم.'},
   {name:'السؤال الثالث', html:'<p><b>س٣:</b> يمتص النبات الماء من التربة بواسطة:</p><p class="opts">(أ) الساق (ب) الجذور التي تنتشر في التربة وتمتص منها الماء والأملاح (ج) الزهرة (د) الثمرة</p>', answer:3, why:'الإجابة الصحيحة أطول البدائل فتكشف نفسها، فتصيبها حتى غير المتمكنة.'},
   {name:'السؤال الرابع', html:'<p><b>س٤:</b> صح أم خطأ: لا تحتاج النباتات أبدًا إلى الضوء (&nbsp;&nbsp;&nbsp;)</p>', answer:1, why:'صح وخطأ مع كلمة «أبدًا» يفتح باب التخمين، فتتذبذب النتائج.'},
-  {name:'السؤال الخامس', html:'<p class="faded"><b>س٥:</b> سمّي ثلاثة من أجزاء الزهرة، ثم وضّحي وظيفة كل جزء منها في عملية التكاثر ..........</p>', answer:5, why:'خط صغير وباهت يصعب قراءته، ولا مساحة كافية للإجابة.'},
-  {name:'السؤال السادس', html:'<p><b>س٦:</b> رتّبي كواكب المجموعة الشمسية حسب بعدها عن الشمس</p>', answer:0, why:'السؤال من خارج وحدة النباتات، فلا يقيس أهدافها.'},
-  {name:'السؤال السابع', html:'<p><b>س٧ (سؤال تفكير عليا):</b> ما لون أوراق معظم النباتات؟</p>', answer:4, why:'سمّيناه تفكيرًا عليا وهو تذكّر بسيط، فغابت المستويات العليا عن الاختبار.'},
-  {name:'السؤال الثامن', html:'<p><b>س٨:</b> يحتاج النبات لكي ينمو إلى:</p><p class="opts">(أ) الماء (ب) الحجارة (ج) البلاستيك (د) الحديد</p>', answer:3, why:'البدائل الخاطئة غير منطقية، فتجيب عنه كل طالبة دون أن نعرف من تتقن الدرس.'},
-  {name:'السؤال التاسع', html:'<p><b>س٩:</b> درس «حاجات النبات» كاملًا: هل يحتاج النبات إلى الهواء؟ (نعم / لا)</p>', answer:1, why:'درس كامل يقيسه سؤال واحد بإجابة نعم أو لا، فنصف الفرصة حظ، وتتغير النتيجة لو أعدناه.'},
-  {name:'السؤال العاشر', html:'<p><b>س١٠:</b> عبّري عن رأيك في أهمية النباتات لحياتنا <span style="white-space:nowrap">(١٠ درجات)</span></p><p class="opts">...........................................................</p>', answer:2, why:'سؤال رأي بعشر درجات بلا معايير، فكل مصححة ستقدّر الدرجة بطريقتها.'},
-  {name:'السؤال الحادي عشر', html:'<p><b>س١١:</b> اشرحي أجزاء الزهرة بالتفصيل <span style="white-space:nowrap">(٢٠ درجة من ٣٠)</span></p>', answer:4, why:'ثلثا الدرجة على درس واحد من أربعة دروس، فلا تمثّل الورقة الوحدة بأوزانها.'}
+  {name:'السؤال الخامس', html:'<p><b>س٥ (سؤال تفكير عليا):</b> ما لون أوراق معظم النباتات؟</p>', answer:4, why:'سمّيناه تفكيرًا عليا وهو تذكّر بسيط، فغابت المستويات العليا عن الاختبار.'}
 ];
 const N = SPOTS.length;
 
@@ -231,7 +225,7 @@ const AR='٠١٢٣٤٥٦٧٨٩';
 const ar=n=>String(n).replace(/[0-9]/g,d=>AR[d]);
 const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const $=id=>document.getElementById(id);
-const LSK='good-test-workshop-v2';
+const LSK='good-test-workshop-v3';
 const LS={get(k,d){try{const v=JSON.parse(localStorage.getItem(LSK)||'{}');return k in v?v[k]:d;}catch(e){return d;}},
           set(k,val){try{const v=JSON.parse(localStorage.getItem(LSK)||'{}');v[k]=val;localStorage.setItem(LSK,JSON.stringify(v));}catch(e){}}};
 const remote=()=>/^https:\/\/script\.google(usercontent)?\.com\//.test(CFG.scriptUrl);
@@ -319,7 +313,7 @@ function home(){
     <h1>هل اختبارك بصحة جيدة؟</h1>
     <p class="by">منفذة الورشة: <b>${esc(CFG.presenter)}</b></p>
     <div class="orn">✦</div>
-    <p class="sub">ورقة اختبار فيها اثنا عشر سؤالًا بُنيت بأخطاء. ستشخّصينها مرتين: مرة في بداية الورشة، ومرة في نهايتها.</p>
+    <p class="sub">ورقة اختبار قصيرة فيها ستة مواضع خلل. ستشخّصينها مرتين: مرة في بداية الورشة، ومرة في نهايتها.</p>
     <label for="nm" style="font-weight:600">اسمك الثلاثي</label>
     <input id="nm" class="field" autocomplete="name" value="${esc(S.name)}" placeholder="مثال: نورة عبدالله السالم">
     <p class="note">اكتبي اسمك بنفس الطريقة في المرتين.</p>
@@ -353,7 +347,7 @@ function quiz(){
   const pre=S.phase==='pre',p=P(),answered=p.filter(x=>x!==null).length;
   app.innerHTML=`<header class="top"><div class="top-in"><h2>${penIcon()}${esc(S.name)}</h2><span class="phase ${pre?'':'post'}">${pre?'التشخيص الأول':'التشخيص الثاني'}</span><span class="muted">${ar(answered)} من ${ar(N)}</span></div><div class="bar"><i style="width:${answered/N*100}%"></i></div></header>
   <div class="wrap"><p class="muted" style="margin:8px 4px 0">${pre?'اختاري لكل سؤال الخاصية التي ترينها. لن يظهر التصحيح الآن، بل في التشخيص الثاني.':'اضغطي على كل دائرة واختاري الخاصية المفقودة، وسيظهر التصحيح مباشرة.'}</p>
-  <div class="desk">${pencilArt()}<article class="paper" aria-label="ورقة الاختبار">${clipArt()}<div class="phead"><span>ورقة الفحص · ${pre?'التشخيص الأول':'التشخيص الثاني'}</span><span>اثنا عشر موضعًا</span></div>${SPOTS.map((s,i)=>{
+  <div class="desk">${pencilArt()}<article class="paper" aria-label="ورقة الاختبار">${clipArt()}<div class="phead"><span>ورقة الفحص · ${pre?'التشخيص الأول':'التشخيص الثاني'}</span><span>ستة مواضع</span></div>${SPOTS.map((s,i)=>{
     const v=p[i];let cls='',tag='';
     if(v!==null){if(pre){cls='picked';tag=`<span class="tag pick">${OPTIONS[v]}</span>`;}else{const ok=v===s.answer;cls=ok?'ok':'bad';tag=`<span class="tag ${ok?'ok':'bad'}">${OPTIONS[s.answer]}</span>`;}}
     return `<div class="block"><button type="button" class="mark ${cls}" data-i="${i}" aria-label="افحصي ${s.name}">${ar(i+1)}</button><div class="txt">${s.html}${tag}</div></div>`;
