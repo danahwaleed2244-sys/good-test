@@ -211,12 +211,12 @@ const TRIP = "ورشة الاختبار الجيد";
 const OPTIONS = ['الصدق','الثبات','الموضوعية','التمييز','الشمول','الإخراج والوضوح'];
 const COLORS  = ['#3E6F86','#6F8F7F','#A8854A','#A0563F','#7A6E9A','#5E6E76'];
 const SPOTS = [
-  {name:'العنوان', html:'<div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap"><p style="font-family:\'Tajawal\',Tahoma,sans-serif;font-size:1.4rem;font-weight:700">اختبار العلوم</p><p>الاسم: ............</p></div>', answer:5, why:'العنوان ناقص: لا صف ولا زمن ولا درجات ولا تعليمات.'},
-  {name:'السؤال الأول', html:'<p><b>س١:</b> اكتبي كل ما تعرفينه عن النبات</p>', answer:2, why:'سؤال مفتوح بلا حدود، فتختلف الدرجة باختلاف المصححة.'},
-  {name:'السؤال الثاني', html:'<p><b>س٢:</b> أيٌّ مما يلي ليس من الأجزاء غير الضرورية للنبات؟</p><p class="opts">(أ) الجذر (ب) الساق (ج) الورقة (د) جميع ما سبق</p>', answer:0, why:'النفي المزدوج يقيس مهارة القراءة لا معرفة العلوم.'},
-  {name:'السؤال الثالث', html:'<p><b>س٣:</b> يمتص النبات الماء من التربة بواسطة:</p><p class="opts">(أ) الساق (ب) الجذور التي تنتشر في التربة وتمتص منها الماء والأملاح (ج) الزهرة (د) الثمرة</p>', answer:3, why:'الإجابة الصحيحة أطول البدائل فتكشف نفسها، فتصيبها حتى غير المتمكنة.'},
-  {name:'السؤال الرابع', html:'<p><b>س٤:</b> صح أم خطأ: لا تحتاج النباتات أبدًا إلى الضوء (&nbsp;&nbsp;&nbsp;)</p>', answer:1, why:'صح وخطأ مع كلمة «أبدًا» يفتح باب التخمين، فتتذبذب النتائج.'},
-  {name:'السؤال الخامس', html:'<p><b>س٥ (سؤال تفكير عليا):</b> ما لون أوراق معظم النباتات؟</p>', answer:4, why:'سمّيناه تفكيرًا عليا وهو تذكّر بسيط، فغابت المستويات العليا عن الاختبار.'}
+  {name:'الفقرة ١', html:'<div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap"><p style="font-family:\'Tajawal\',Tahoma,sans-serif;font-size:1.4rem;font-weight:700">اختبار العلوم</p><p>الاسم: ............</p></div>', answer:5, why:'العنوان ناقص: لا صف ولا زمن ولا درجات ولا تعليمات.'},
+  {name:'الفقرة ٢', html:'<p>اكتبي كل ما تعرفينه عن النبات</p>', answer:2, why:'سؤال مفتوح بلا حدود، فتختلف الدرجة باختلاف المصححة.'},
+  {name:'الفقرة ٣', html:'<p>أيٌّ مما يلي ليس من الأجزاء غير الضرورية للنبات؟</p><p class="opts">(أ) الجذر (ب) الساق (ج) الورقة (د) جميع ما سبق</p>', answer:0, why:'النفي المزدوج يقيس مهارة القراءة لا معرفة العلوم.'},
+  {name:'الفقرة ٤', html:'<p>يمتص النبات الماء من التربة بواسطة:</p><p class="opts">(أ) الساق (ب) الجذور التي تنتشر في التربة وتمتص منها الماء والأملاح (ج) الزهرة (د) الثمرة</p>', answer:3, why:'الإجابة الصحيحة أطول البدائل فتكشف نفسها، فتصيبها حتى غير المتمكنة.'},
+  {name:'الفقرة ٥', html:'<p>صح أم خطأ: لا تحتاج النباتات أبدًا إلى الضوء (&nbsp;&nbsp;&nbsp;)</p>', answer:1, why:'صح وخطأ مع كلمة «أبدًا» يفتح باب التخمين، فتتذبذب النتائج.'},
+  {name:'الفقرة ٦', html:'<p><b>(سؤال تفكير عليا)</b> ما لون أوراق معظم النباتات؟</p>', answer:4, why:'سمّيناه تفكيرًا عليا وهو تذكّر بسيط، فغابت المستويات العليا عن الاختبار.'}
 ];
 const N = SPOTS.length;
 
@@ -350,7 +350,7 @@ function quiz(){
   <div class="desk">${pencilArt()}<article class="paper" aria-label="ورقة الاختبار">${clipArt()}<div class="phead"><span>ورقة الفحص · ${pre?'التشخيص الأول':'التشخيص الثاني'}</span><span>ستة مواضع</span></div>${SPOTS.map((s,i)=>{
     const v=p[i];let cls='',tag='';
     if(v!==null){if(pre){cls='picked';tag=`<span class="tag pick">${OPTIONS[v]}</span>`;}else{const ok=v===s.answer;cls=ok?'ok':'bad';tag=`<span class="tag ${ok?'ok':'bad'}">${OPTIONS[s.answer]}</span>`;}}
-    return `<div class="block"><button type="button" class="mark ${cls}" data-i="${i}" aria-label="افحصي ${s.name}">${markIcon(cls)}</button><div class="txt">${s.html}${tag}</div></div>`;
+    return `<div class="block"><button type="button" class="mark ${cls}" data-i="${i}" aria-label="افحصي ${s.name}">${ar(i+1)}</button><div class="txt">${s.html}${tag}</div></div>`;
   }).join('')}</article></div>
   ${answered===N?`<div style="text-align:center;margin-top:22px"><button class="btn gold" id="fin" type="button">${pre?'إرسال إجاباتي':'استلمي شهادتك'}</button></div>`:''}
   </div>
