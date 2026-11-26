@@ -369,7 +369,7 @@ function home(){
     <p class="sub">ورقة اختبار قصيرة فيها ستة مواضع خلل. ستشخّصينها مرتين: مرة في بداية الورشة، ومرة في نهايتها.</p>
     <label for="nm" style="font-weight:600">اسمك الثلاثي</label>
     <input id="nm" class="field" autocomplete="name" value="${esc(S.name)}" placeholder="مثال: نورة عبدالله السالم">
-    <p class="note">اكتبي اسمك بنفس الطريقة في المرتين.</p>
+    <p class="note">اكتبي اسمك بنفس الطريقة في المرتين. ودخولك للتشخيص يسجّل حضورك في الورشة تلقائيًا ✓</p>
     <p class="err" id="err"></p>
     <div class="btns">
       <button class="btn" id="goPre" type="button" ${preDone?'disabled':''}>${preDone?'تم إرسال التشخيص الأول':(S.ids.pre?'أكملي التشخيص الأول':'التشخيص الأول (بداية الورشة)')}</button>
@@ -383,11 +383,18 @@ function home(){
   $('toT').onclick=()=>{location.hash='teacher';};
   if($('again'))$('again').onclick=()=>{S.name='';['pre','post'].forEach(ph=>{S.ids[ph]='';S.picks[ph]=Array(N).fill(null);LS.set('id_'+ph,'');LS.set('picks_'+ph,S.picks[ph]);});LS.set('name','');home();};
 }
+function markAttend(n){
+  const key='att_done_'+norm(n);
+  if(LS.get(key,false))return;
+  const now=new Date();
+  const rec={id:'att_'+now.getTime().toString(36)+Math.random().toString(36).slice(2,7),type:'att',name:n,date:now.toISOString()};
+  localSave(rec);post({action:'save',record:rec});LS.set(key,true);
+}
 function start(ph){
   const n=$('nm').value.trim().replace(/\s+/g,' ');
   if(n.split(' ').length<2){$('err').textContent='اكتبي اسمك الثلاثي أو الثنائي على الأقل.';return;}
   if(norm(n)!==norm(S.name)){['pre','post'].forEach(p=>{S.ids[p]='';S.picks[p]=Array(N).fill(null);LS.set('id_'+p,'');LS.set('picks_'+p,S.picks[p]);});}
-  S.name=n;LS.set('name',n);
+  S.name=n;LS.set('name',n);markAttend(n);
   if(!S.ids[ph]){S.ids[ph]='res_'+ph+'_'+Date.now().toString(36)+Math.random().toString(36).slice(2,7);LS.set('id_'+ph,S.ids[ph]);S.picks[ph]=Array(N).fill(null);LS.set('picks_'+ph,S.picks[ph]);}
   S.phase=ph;
   if(ph==='post'&&isDone(P())){S.certRec=record(true);S.certPre=localPre();S.from='quiz';S.view='cert';}
