@@ -613,7 +613,7 @@ function dash(){
   ${nowA?`<p class="muted" style="margin:-8px 4px 18px">${ar(nowA)} تجيب الآن…</p>`:''}
 
   <div class="card attcard">
-    <div class="att-head"><h3>الحضور <span class="attn">${ar((S.att||[]).length)}</span></h3>${(S.att||[]).length?'<button class="btn gold" id="mkcerts" type="button">إصدار شهادات الحضور</button>':''}</div>
+    <div class="att-head"><h3>الحضور <span class="attn">${ar((S.att||[]).length)}</span></h3><button class="btn gold" id="mkcerts" type="button">إصدار شهادات الحضور</button></div>
     ${(S.att||[]).length?`<ol class="attlist">${S.att.map(a=>`<li><span>${esc(a.name)}</span><small>${timeOf(a.date)}</small></li>`).join('')}</ol>`:'<p class="muted" style="margin:0">لم تسجّل أي معلمة حضورها بعد. رابط التسجيل هو رابط الورشة نفسه مع ‎#attend في آخره.</p>'}
   </div>
 
